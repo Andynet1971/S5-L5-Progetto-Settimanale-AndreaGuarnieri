@@ -1,0 +1,27 @@
+﻿@model IEnumerable<S5_L5_Progetto_Settimanale_AndreaGuarnieri.Models.ViolazioniGraviViewModel>
+
+<h2>Violazioni che Superano i 10 Punti</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Cognome</th>
+            <th>Nome</th>
+            <th>Data Violazione</th>
+            <th>Decurtamento Punti</th>
+            <th>Importo</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Cognome</td>
+                <td>@item.Nome</td>
+                <td>@item.DataViolazione.ToString("dd/MM/yyyy")</td>
+                <td>@item.DecurtamentoPunti</td>
+                <td>@item.Importo</td>
+            </tr>
+        }
+    </tbody>
+</table>

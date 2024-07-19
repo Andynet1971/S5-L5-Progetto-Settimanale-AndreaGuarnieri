@@ -1,0 +1,67 @@
+﻿@model S5_L5_Progetto_Settimanale_AndreaGuarnieri.Models.VerbaleCreateViewModel
+
+<h2>Compilazione Verbale</h2>
+
+<form asp-action="Create" method="post">
+    <div class="form-group">
+        <label for="Cognome">Cognome</label>
+        <input type="text" class="form-control" asp-for="Cognome" />
+        <span asp-validation-for="Cognome" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label for="Nome">Nome</label>
+        <input type="text" class="form-control" asp-for="Nome" />
+        <span asp-validation-for="Nome" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label for="Indirizzo">Indirizzo</label>
+        <input type="text" class="form-control" asp-for="Indirizzo" />
+        <span asp-validation-for="Indirizzo" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label for="Città">Città</label>
+        <input type="text" class="form-control" asp-for="Città" />
+        <span asp-validation-for="Città" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label for="CAP">CAP</label>
+        <input type="text" class="form-control" asp-for="CAP" />
+        <span asp-validation-for="CAP" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label for="Cod_Fisc">Codice Fiscale</label>
+        <input type="text" class="form-control" asp-for="Cod_Fisc" />
+        <span asp-validation-for="Cod_Fisc" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label for="DataViolazione">Data Violazione</label>
+        <input type="datetime-local" class="form-control" asp-for="DataViolazione" />
+        <span asp-validation-for="DataViolazione" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label for="IndirizzoViolazione">Indirizzo Violazione</label>
+        <input type="text" class="form-control" asp-for="IndirizzoViolazione" />
+        <span asp-validation-for="IndirizzoViolazione" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label for="Nominativo_Agente">Nominativo Agente</label>
+        <input type="text" class="form-control" asp-for="Nominativo_Agente" />
+        <span asp-validation-for="Nominativo_Agente" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label for="DataTrascrizioneVerbale">Data Trascrizione Verbale</label>
+        <input type="datetime-local" class="form-control" asp-for="DataTrascrizioneVerbale" />
+        <span asp-validation-for="DataTrascrizioneVerbale" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label for="Idviolazioni">Violazioni</label>
+        <select asp-for="Idviolazioni" class="form-control" asp-items="@(new SelectList(ViewBag.TipoViolazioni, "Idviolazione", "Descrizione"))" multiple></select>
+        <span asp-validation-for="Idviolazioni" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Salva</button>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

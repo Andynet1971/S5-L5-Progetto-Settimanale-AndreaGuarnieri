@@ -1,0 +1,25 @@
+﻿@model IEnumerable<S5_L5_Progetto_Settimanale_AndreaGuarnieri.Models.TipoViolazione>
+
+<h2>Elenco Violazioni</h2>
+<table class="table table-striped mt-3">
+    <thead>
+        <tr>
+            <th>Descrizione</th>
+            <th>Importo</th>
+            <th>Decurtamento Punti</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Descrizione</td>
+                <td>@item.Importo</td>
+                <td>@item.DecurtamentoPunti</td>
+            </tr>
+        }
+    </tbody>
+</table>
+<div class="mt-3">
+    <a href="/Violazione/Create" class="btn btn-primary">Aggiungi Nuova Violazione</a>
+</div>
