@@ -1,0 +1,37 @@
+﻿@model S5_L5_Progetto_Settimanale_AndreaGuarnieri.Models.LoginViewModel
+
+@{
+    ViewData["Title"] = "Login";
+    Layout = "_LayoutLogin"; // Imposta il layout personalizzato per il login
+}
+
+<div class="container login-container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <h2>Login</h2>
+            <form asp-action="Login" method="post">
+                <div class="form-group">
+                    <label asp-for="Username"></label>
+                    <input asp-for="Username" class="form-control" />
+                    <span asp-validation-for="Username" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Password"></label>
+                    <input asp-for="Password" class="form-control" type="password" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <div class="form-check">
+                        <input asp-for="RememberMe" class="form-check-input" />
+                        <label asp-for="RememberMe" class="form-check-label"></label>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Login</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,14 @@
+﻿@{
+    ViewData["Title"] = "Visualizzazioni";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="visualizzazioni-container">
+    <h2>Visualizzazioni</h2>
+    <ul>
+        <li><a asp-area="" asp-controller="Verbale" asp-action="VerbaliPerTrasgressore">Verbali per Trasgressore</a></li>
+        <li><a asp-area="" asp-controller="Verbale" asp-action="PuntiDecurtatiPerTrasgressore">Punti Decurtati per Trasgressore</a></li>
+        <li><a asp-area="" asp-controller="Verbale" asp-action="ViolazioniSuperano10Punti">Violazioni +10 Punti</a></li>
+        <li><a asp-area="" asp-controller="Verbale" asp-action="ViolazioniImportoMaggiore400">Violazioni con Importo Maggiore di 400 Euro</a></li>
+    </ul>
+</div>

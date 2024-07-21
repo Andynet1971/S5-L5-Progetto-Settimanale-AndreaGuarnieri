@@ -12,5 +12,6 @@ namespace S5_L5_Progetto_Settimanale_AndreaGuarnieri.Models
         IEnumerable<PuntiDecurtatiPerTrasgressoreViewModel> GetPuntiDecurtatiPerTrasgressore();
         IEnumerable<ViolazioniGraviViewModel> GetViolazioniSuperano10Punti();
         IEnumerable<ViolazioniGraviViewModel> GetViolazioniImportoMaggiore400();
+        IEnumerable<VerbaleDetailViewModel> GetVerbaliWithDetails();
     }
 }

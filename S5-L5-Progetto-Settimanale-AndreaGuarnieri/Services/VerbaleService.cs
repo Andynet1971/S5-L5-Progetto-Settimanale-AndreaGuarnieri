@@ -1,22 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.SqlClient;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
+﻿using System.Data.SqlClient;
 
 namespace S5_L5_Progetto_Settimanale_AndreaGuarnieri.Models
 {
     public class VerbaleService : IVerbale
     {
         private readonly string _connectionString;
-        private readonly ILogger<VerbaleService> _logger;
 
-        public VerbaleService(IConfiguration configuration, ILogger<VerbaleService> logger)
+        // Costruttore che inizializza la stringa di connessione tramite dependency injection
+        public VerbaleService(IConfiguration configuration)
         {
             _connectionString = configuration.GetConnectionString("DefaultConnection");
-            _logger = logger;
         }
 
+        // Metodo per ottenere tutti i verbali
         public IEnumerable<Verbale> GetAll()
         {
             var verbali = new List<Verbale>();
@@ -48,6 +44,44 @@ namespace S5_L5_Progetto_Settimanale_AndreaGuarnieri.Models
             return verbali;
         }
 
+        // Metodo per ottenere i dettagli dei verbali
+        public IEnumerable<VerbaleDetailViewModel> GetVerbaliWithDetails()
+        {
+            var query = @"
+                SELECT v.Idverbale, v.DataViolazione, v.IndirizzoViolazione, a.Cognome, a.Nome, tv.Descrizione
+                FROM VERBALE v
+                JOIN ANAGRAFICA a ON v.Idanagrafica = a.Idanagrafica
+                JOIN VERBALE_VIOLAZIONI vv ON v.Idverbale = vv.Idverbale
+                JOIN TIPO_VIOLAZIONE tv ON vv.Idviolazione = tv.Idviolazione";
+
+            var verbali = new List<VerbaleDetailViewModel>();
+
+            using (var conn = new SqlConnection(_connectionString))
+            {
+                var cmd = new SqlCommand(query, conn);
+                conn.Open();
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var verbale = new VerbaleDetailViewModel
+                        {
+                            Idverbale = reader.GetInt32(0),
+                            DataViolazione = reader.GetDateTime(1),
+                            IndirizzoViolazione = reader.GetString(2),
+                            Cognome = reader.GetString(3),
+                            Nome = reader.GetString(4),
+                            DescrizioneViolazione = reader.GetString(5)
+                        };
+                        verbali.Add(verbale);
+                    }
+                }
+            }
+
+            return verbali;
+        }
+
+        // Metodo per ottenere un verbale specifico per ID
         public Verbale GetById(int id)
         {
             Verbale verbale = null;
@@ -79,6 +113,7 @@ namespace S5_L5_Progetto_Settimanale_AndreaGuarnieri.Models
             return verbale;
         }
 
+        // Metodo per aggiungere un nuovo verbale
         public void Add(Verbale verbale)
         {
             try
@@ -94,16 +129,15 @@ namespace S5_L5_Progetto_Settimanale_AndreaGuarnieri.Models
                     cmd.Parameters.AddWithValue("@Idanagrafica", verbale.Idanagrafica);
                     conn.Open();
                     verbale.Idverbale = (int)cmd.ExecuteScalar();
-                    _logger.LogInformation("Verbale aggiunto al database: {@Verbale}", verbale);
                 }
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Errore durante l'inserimento del verbale: {@Verbale}", verbale);
                 throw;
             }
         }
 
+        // Metodo per aggiornare un verbale esistente
         public void Update(Verbale verbale)
         {
             try
@@ -120,16 +154,15 @@ namespace S5_L5_Progetto_Settimanale_AndreaGuarnieri.Models
                     cmd.Parameters.AddWithValue("@Idverbale", verbale.Idverbale);
                     conn.Open();
                     cmd.ExecuteNonQuery();
-                    _logger.LogInformation("Verbale aggiornato nel database: {@Verbale}", verbale);
                 }
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Errore durante l'aggiornamento del verbale: {@Verbale}", verbale);
                 throw;
             }
         }
 
+        // Metodo per aggiungere una violazione ad un verbale esistente
         public void AddVerbaleViolazioni(VerbaleViolazioni verbaleViolazioni)
         {
             try
@@ -142,16 +175,15 @@ namespace S5_L5_Progetto_Settimanale_AndreaGuarnieri.Models
                     cmd.Parameters.AddWithValue("@Idviolazione", verbaleViolazioni.Idviolazione);
                     conn.Open();
                     cmd.ExecuteNonQuery();
-                    _logger.LogInformation("Violazione aggiunta al verbale nel database: {@VerbaleViolazioni}", verbaleViolazioni);
                 }
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Errore durante l'inserimento della violazione del verbale: {@VerbaleViolazioni}", verbaleViolazioni);
                 throw;
             }
         }
 
+        // Metodo per ottenere il totale dei verbali per trasgressore
         public IEnumerable<VerbaliPerTrasgressoreViewModel> GetVerbaliPerTrasgressore()
         {
             var result = new List<VerbaliPerTrasgressoreViewModel>();
@@ -183,6 +215,7 @@ namespace S5_L5_Progetto_Settimanale_AndreaGuarnieri.Models
             return result;
         }
 
+        // Metodo per ottenere il totale dei punti decurtati per trasgressore
         public IEnumerable<PuntiDecurtatiPerTrasgressoreViewModel> GetPuntiDecurtatiPerTrasgressore()
         {
             var result = new List<PuntiDecurtatiPerTrasgressoreViewModel>();
@@ -216,6 +249,7 @@ namespace S5_L5_Progetto_Settimanale_AndreaGuarnieri.Models
             return result;
         }
 
+        // Metodo per ottenere le violazioni che superano 10 punti di decurtamento
         public IEnumerable<ViolazioniGraviViewModel> GetViolazioniSuperano10Punti()
         {
             var result = new List<ViolazioniGraviViewModel>();
@@ -251,6 +285,7 @@ namespace S5_L5_Progetto_Settimanale_AndreaGuarnieri.Models
             return result;
         }
 
+        // Metodo per ottenere le violazioni con importo maggiore di 400 euro
         public IEnumerable<ViolazioniGraviViewModel> GetViolazioniImportoMaggiore400()
         {
             var result = new List<ViolazioniGraviViewModel>();

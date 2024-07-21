@@ -1,22 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.SqlClient;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
+﻿using System.Data.SqlClient;
 
 namespace S5_L5_Progetto_Settimanale_AndreaGuarnieri.Models
 {
     public class AnagraficaService : IAnagrafica
     {
         private readonly string _connectionString;
-        private readonly ILogger<AnagraficaService> _logger;
 
-        public AnagraficaService(IConfiguration configuration, ILogger<AnagraficaService> logger)
+        // Costruttore che inizializza la stringa di connessione e il logger tramite dependency injection
+        public AnagraficaService(IConfiguration configuration)
         {
             _connectionString = configuration.GetConnectionString("DefaultConnection");
-            _logger = logger;
         }
 
+        // Metodo per ottenere tutte le anagrafiche
         public IEnumerable<Anagrafica> GetAll()
         {
             var anagrafiche = new List<Anagrafica>();
@@ -49,6 +45,7 @@ namespace S5_L5_Progetto_Settimanale_AndreaGuarnieri.Models
             return anagrafiche;
         }
 
+        // Metodo per ottenere un'anagrafica specifica per ID
         public Anagrafica GetById(int id)
         {
             Anagrafica anagrafica = null;
@@ -81,6 +78,7 @@ namespace S5_L5_Progetto_Settimanale_AndreaGuarnieri.Models
             return anagrafica;
         }
 
+        // Metodo per aggiungere una nuova anagrafica
         public void Add(Anagrafica anagrafica)
         {
             try
@@ -97,16 +95,15 @@ namespace S5_L5_Progetto_Settimanale_AndreaGuarnieri.Models
                     cmd.Parameters.AddWithValue("@Cod_Fisc", anagrafica.Cod_Fisc);
                     conn.Open();
                     anagrafica.Idanagrafica = (int)cmd.ExecuteScalar();
-                    _logger.LogInformation("Anagrafica aggiunta al database: {@Anagrafica}", anagrafica);
                 }
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Errore durante l'inserimento dell'anagrafica: {@Anagrafica}", anagrafica);
                 throw;
             }
         }
 
+        // Metodo per aggiornare un'anagrafica esistente
         public void Update(Anagrafica anagrafica)
         {
             using (var conn = new SqlConnection(_connectionString))
@@ -122,10 +119,10 @@ namespace S5_L5_Progetto_Settimanale_AndreaGuarnieri.Models
                 cmd.Parameters.AddWithValue("@Cod_Fisc", anagrafica.Cod_Fisc);
                 conn.Open();
                 cmd.ExecuteNonQuery();
-                _logger.LogInformation("Anagrafica aggiornata nel database: {@Anagrafica}", anagrafica);
             }
         }
 
+        // Metodo per eliminare un'anagrafica per ID
         public void Delete(int id)
         {
             using (var conn = new SqlConnection(_connectionString))
@@ -135,7 +132,6 @@ namespace S5_L5_Progetto_Settimanale_AndreaGuarnieri.Models
                 cmd.Parameters.AddWithValue("@Id", id);
                 conn.Open();
                 cmd.ExecuteNonQuery();
-                _logger.LogInformation("Anagrafica eliminata dal database: {Id}", id);
             }
         }
     }

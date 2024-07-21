@@ -1,22 +1,167 @@
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
 }
+
+/* Stili per la navbar */
+.navbar {
+    background-color: #343a40;
+}
+
+.navbar-brand, .nav-link {
+    color: #fff !important;
+}
+
+    .navbar-brand:hover, .nav-link:hover {
+        color: #dcdcdc !important;
+    }
+
+/* Stili per la home page */
+.home-container {
+    margin-top: 50px;
+    text-align: center;
+}
+
+    .home-container h1 {
+        color: #337ab7;
+    }
+
+    .home-container p {
+        font-size: 18px;
+        color: #555;
+    }
+
+/* Stili per la pagina di accesso negato */
+.access-denied-container {
+    max-width: 600px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    margin: 50px auto;
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+    .access-denied-container h2 {
+        color: #d9534f;
+    }
+
+    .access-denied-container .btn {
+        margin-top: 20px;
+    }
+
+/* Stili per il form di login */
+.login-container {
+    max-width: 500px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    margin: 50px auto;
+}
+
+    .login-container h2 {
+        color: #337ab7;
+    }
+
+    .login-container .btn {
+        margin-top: 20px;
+    }
+/* Stili per la pagina di visualizzazioni */
+.visualizzazioni-container {
+    margin-top: 50px;
+    text-align: center;
+}
+
+    .visualizzazioni-container h2 {
+        color: #337ab7;
+        margin-bottom: 20px;
+    }
+
+    .visualizzazioni-container ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    .visualizzazioni-container li {
+        margin: 10px 0;
+    }
+
+    .visualizzazioni-container a {
+        color: #007bff;
+        text-decoration: none;
+        font-size: 18px;
+    }
+
+        .visualizzazioni-container a:hover {
+            text-decoration: underline;
+        }
+/* Stili per la pagina di compilazione verbale */
+.verbale-container {
+    max-width: 800px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    margin: 50px auto;
+}
+
+    .verbale-container h2 {
+        color: #337ab7;
+        margin-bottom: 20px;
+    }
+
+    .verbale-container .form-group {
+        margin-bottom: 15px;
+    }
+
+        .verbale-container .form-group label {
+            font-weight: bold;
+        }
+
+    .verbale-container .form-control {
+        border: 1px solid #ddd;
+        border-radius: 5px;
+    }
+
+        .verbale-container .form-control:focus {
+            border-color: #258cfb;
+            box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+        }
+
+    .verbale-container .btn {
+        margin-top: 20px;
+        background-color: #337ab7;
+        border-color: #337ab7;
+    }
+
+        .verbale-container .btn:hover {
+            background-color: #286090;
+            border-color: #204d74;
+        }
+
+    .verbale-container .text-danger {
+        color: #d9534f;
+    }
